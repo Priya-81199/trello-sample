@@ -15,6 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const AddButton = ({title, description, listType, setTitle, setDescription, setListType, onSave}) => {
     const [open, setOpen] = useState(false);
+    const [error,setError] = useState('');
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -23,8 +24,11 @@ const AddButton = ({title, description, listType, setTitle, setDescription, setL
         setOpen(false);
     };
     const handleSave = () => {
-        setOpen(false);
         onSave();
+        setTitle('');
+        setDescription('');
+        setListType('todo');
+        setOpen(false);
     };
     return(
         <div>
@@ -53,7 +57,9 @@ const AddButton = ({title, description, listType, setTitle, setDescription, setL
                     fullWidth
                     value={title}
                     onChange={(event) => {
-                        setTitle(event.target.value);
+                        let value = event.target.value;
+                        value = value.replace(/[^A-Za-z]/ig,'')
+                        setTitle(value);
                     }}
                 />
                 <TextField
@@ -67,10 +73,17 @@ const AddButton = ({title, description, listType, setTitle, setDescription, setL
                     fullWidth
                     value={description}
                     onChange={(event) => {
-                        setDescription(event.target.value);
+                        let value = event.target.value;
+                        if(value.length < 25){
+                            setError('Description should be minimum of 25 characters');
+                        }
+                        else{
+                            setError('');
+                        }
+                        setDescription(value);
                     }}
                 />
-                <div style={{height:'30px'}}></div>
+                <div style={{height:'30px',color:'red'}}>{error}</div>
                 <InputLabel id="demo-simple-select-label">Todo / Doing / Done ?</InputLabel>
                 <Select
                 labelId="demo-simple-select-label"
