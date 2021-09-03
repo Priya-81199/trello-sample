@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+import { cloneDeep } from 'lodash';
+import React, { useState } from 'react';
 import './App.css';
+import AddButton from './components/AddButton';
+import MainContainer from './components/MainContainer';
 
 function App() {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [listType, setListType] = useState('todo');
+  const [cards, setCards] = useState({
+    'todo': [],
+    'doing': [],
+    'done':[],
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className = "App">
+        <h1 className = 'heading'>Trello</h1>
+        <AddButton
+          title={title}
+          description={description}
+          listType={listType}
+          setTitle={setTitle}
+          setDescription={setDescription}
+          setListType={setListType}
+          onSave={() => {
+            const newCards = cards;
+            newCards[listType].push({
+              title,
+              description,
+            });
+            setCards(cloneDeep(newCards));
+          }}
+        />
+        <MainContainer cards={cards} />
     </div>
   );
 }
