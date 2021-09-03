@@ -63,7 +63,7 @@ const AddButton = ({title, description, listType, setTitle, setDescription, setL
                     value={title}
                     onChange={(event) => {
                         let value = event.target.value;
-                        value = value.replace(/[^A-Za-z]/ig,'')
+                        value = value.replace(/[^A-Za-z]s/ig,'')
                         setTitle(value);
                     }}
                 />
