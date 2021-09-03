@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,33 +13,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddButton = ({title, description, listType, setTitle, setDescription, setListType, onSave}) => {
-    const [open, setOpen] = useState(false);
-    const [error,setError] = useState('');
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setTitle('');
-        setDescription('');
-        setListType('todo');
-        setError('');
-        setOpen(false);
-    };
-    const handleSave = () => {
-        onSave();
-        setTitle('');
-        setDescription('');
-        setListType('todo');
-        setError('');
-        setOpen(false);
-    };
+const AddButton = ({title, description, listType, setTitle, setDescription, setListType, open, handleClose, error, setError, handleSave}) => {
+    
     return(
         <div>
-        <div className = 'add' onClick={handleClickOpen}>
-            Add New Card   
-        </div>
+        
         <Dialog
             open={open}
             TransitionComponent={Transition}
