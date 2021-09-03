@@ -21,6 +21,10 @@ const AddButton = ({title, description, listType, setTitle, setDescription, setL
         setOpen(true);
     };
     const handleClose = () => {
+        setTitle('');
+        setDescription('');
+        setListType('todo');
+        setError('');
         setOpen(false);
     };
     const handleSave = () => {
@@ -28,6 +32,7 @@ const AddButton = ({title, description, listType, setTitle, setDescription, setL
         setTitle('');
         setDescription('');
         setListType('todo');
+        setError('');
         setOpen(false);
     };
     return(
@@ -103,7 +108,7 @@ const AddButton = ({title, description, listType, setTitle, setDescription, setL
                 <Button onClick={handleClose} color="secondary">
                     Cancel
                 </Button>
-                <Button onClick={handleSave} color="primary">
+                <Button onClick={handleSave} color="primary" disabled = {error.length > 0 || title.length < 1 || description.length < 1}>
                     Save
                 </Button>
             </DialogActions>
